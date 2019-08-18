@@ -15,15 +15,16 @@ int main(int argc, const char *argv[]) {
     //}
 
 	std::cout << "Load weights ..." << std::endl;
-	const char* config = "D:\\Github\\YOLOv3_torch\\models\\yolov3.cfg"; //argv[1]
-	const char* weights = "D:\\Github\\YOLOv3_torch\\models\\yolov3.weights"; //argv[2]
+	const char* config = argv[1];
+	const char* weights = argv[2];
 
 	std::array<int64_t, 2> inp_dim = { 416, 416 }; 	//model input image size (row, column)
 	Detector detector(inp_dim, config, weights);
 
 	// using opencv's glob function to get file list in a folder
 	std::vector<std::string> filenames;
-	std::string path = "D:\\Github\\YOLOv3_torch\\images\\*.jpg";
+	std::string path = argv[3];
+	path = path+"\\*.jpg";
 	cv::glob(path, filenames, false);
 
 	std::cout << "Start to inference ..." << std::endl;
@@ -41,7 +42,7 @@ int main(int argc, const char *argv[]) {
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 	std::cout << "Average time per image: " << duration / images.size() << "ms" << std::endl;
 
-	auto classnames = read_txt("D:\\Github\\YOLOv3_torch\\models\\classnames.txt");
+	//auto classnames = read_txt("D:\\Github\\YOLOv3_torch\\models\\classnames.txt");
 
 	for (size_t i = 0; i < results.size(); i++) {
 
@@ -51,20 +52,17 @@ int main(int argc, const char *argv[]) {
 		std::cout << outname << std::endl;
 		//print class_index if objects found!
 		for (auto& d : res) {
-			//if (std::is_empty(d)) {
-			//	std::cout << "no object found in: " << filenames[i] << std::endl;
-			//}
 			std::cout << d.cls <<" "<< d.scr << std::endl;	
-			// draw box onto images		
-			//draw_bbox(imgclone, d.bbox, std::to_string(d.cls), color_map(d.cls));
-			draw_bbox(imgclone, d.bbox, classnames[d.cls], color_map(d.cls));
+			// draw box on images		
+			draw_bbox(imgclone, d.bbox, std::to_string(d.cls), color_map(d.cls));
+			//draw_bbox(imgclone, d.bbox, classnames[d.cls], color_map(d.cls));
 		}
 		cv::imwrite(outname.replace(outname.find("jpg"), 3, "bbox.jpg"), imgclone);
 	}
 
     std::cout << "Done" << std::endl;
 
-	////Real Time Object Detection
+	////For camera 
 	//std::string input_path = "Current";
 	//cv::VideoCapture cap(input_path);
 	//if (!cap.isOpened()) {

@@ -1,7 +1,7 @@
 YOLOv3 C++ 
 =================
 
-Libtorch implementation of the YOLOv3, which works on `Windows` and `Linux`.
+Libtorch implementation of YOLOv3, which works on `Windows` and `Linux`.
 
 ## Dependency
 
@@ -29,8 +29,11 @@ yolov3.exe yolov3.cfg yolov3.weights images
 ## Build
 
 ```shell
+
+# before running this project, you have to edit two file
+# -> edit the CMakeList.txt, set correct path to libtorch and OpenCV
+# -> edit the yolov3/main.cpp at line 27. Set correct image format. 
 cd path/to/YOLOv3
-# -> edit the CMakeList.txt, set crrect path to libtorch and OpenCV
 mkdir build
 cd build
 cmake ..
@@ -40,17 +43,24 @@ make # linux
 
 ## Performance
 
-No yet.
+Only tested with CPU on Windows for now. 
 
+
+## Features
+Supports  
+- NMS
+- Soft NMS
+- Weighted NMS
 
 ## TODO
 - Support training
+- ...
 
 
 
-## Thanks
+## Credits
 
-This repo are created based on the implementations below:  
+This repo is created based on the implementations below:  
 [weixu000](https://github.com/weixu000/libtorch-yolov3-deepsort)  
 [PyTorch-YOLOv3](https://github.com/eriklindernoren/PyTorch-YOLOv3)  
 [YOLO_v3_tutorial_from_scratch](https://github.com/ayooshkathuria/YOLO_v3_tutorial_from_scratch)
