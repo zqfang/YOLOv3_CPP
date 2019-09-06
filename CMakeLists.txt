@@ -4,12 +4,15 @@ project(YOLOV3-app)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(Torch_DIR "D:\\libdetect\\libtorch120debug\\share\\cmake\\Torch")
-set(OpenCV_DIR "C:\\opencv410\\build")
-# set(CMAKE_PREFIX_PATH "D:\\libdetect\\libtorch110" "C:\\opencv410\\build\\x64\\vc15\\lib")
+set(Torch_DIR "D:/fzq/YOLOv3_CPP/libtorch120debug/share/cmake/Torch")
+set(OpenCV_DIR D:/workspace/opencv410/build)
+set(CMAKE_PREFIX_PATH "D:/fzq/YOLOv3_CPP/libtorch120debug")
 
 # set(OUTPUT_DIR "result")
 # set(TARGETS_DIR_NAME "targets")
+
+find_package(OpenCV REQUIRED)
+find_package(Torch REQUIRED)
 
 # For profiler on Ubuntu
 if (CMAKE_BUILD_TYPE STREQUAL Debug AND NOT MSVC)

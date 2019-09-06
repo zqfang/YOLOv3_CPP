@@ -4,7 +4,7 @@
 #include <string>
 
 #include <opencv2/opencv.hpp>
-#include "Detector.h"
+#include "../detection/inc/Detector.h"
 #include "util.h"
 using namespace std;
 

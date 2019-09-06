@@ -4,6 +4,7 @@
 datasets
 models/*.weights
 lib/libtorch
+libtorch120debug
 build
 dist
 
