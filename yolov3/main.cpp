@@ -24,7 +24,7 @@ int main(int argc, const char *argv[]) {
 	// using opencv's glob function to get file list in a folder
 	std::vector<std::string> filenames;
 	std::string path = argv[3];
-	path = path+"\\*.jpg";
+	path = path+"/*.jpg";
 	cv::glob(path, filenames, false);
 
 	std::cout << "Start to inference ..." << std::endl;

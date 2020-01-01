@@ -9,20 +9,20 @@
 #  ifndef DETECTION_EXPORT
 #    ifdef detection_EXPORTS
         /* We are building this library */
-#      define DETECTION_EXPORT __declspec(dllexport)
+#      define DETECTION_EXPORT __attribute__((visibility("default")))
 #    else
         /* We are using this library */
-#      define DETECTION_EXPORT __declspec(dllimport)
+#      define DETECTION_EXPORT __attribute__((visibility("default")))
 #    endif
 #  endif
 
 #  ifndef DETECTION_NO_EXPORT
-#    define DETECTION_NO_EXPORT 
+#    define DETECTION_NO_EXPORT __attribute__((visibility("hidden")))
 #  endif
 #endif
 
 #ifndef DETECTION_DEPRECATED
-#  define DETECTION_DEPRECATED __declspec(deprecated)
+#  define DETECTION_DEPRECATED __attribute__ ((__deprecated__))
 #endif
 
 #ifndef DETECTION_DEPRECATED_EXPORT

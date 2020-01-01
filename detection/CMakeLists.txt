@@ -8,7 +8,7 @@ link_directories(${OpenCV_LIBS} "${TORCH_LIBRARIES}" )
 
 add_library(detection SHARED ${DETECTION_SRCS})
 include(GenerateExportHeader)
-GENERATE_EXPORT_HEADER(detection EXPORT_FILE_NAME ${CMAKE_CURRENT_SOURCE_DIR}/inc/Detetion_export.h)
+GENERATE_EXPORT_HEADER(detection EXPORT_FILE_NAME ${CMAKE_CURRENT_SOURCE_DIR}/inc/Detection_export.h)
 
 target_include_directories(detection PUBLIC ${DARK_INC} )
 target_link_libraries(detection PUBLIC ${OpenCV_LIBS} "${TORCH_LIBRARIES}")

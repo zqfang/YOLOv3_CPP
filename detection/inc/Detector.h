@@ -5,7 +5,7 @@
 #include <array>
 #include <torch/torch.h>
 #include <opencv2/opencv.hpp>
-#include "Detetion_export.h"
+#include "Detection_export.h"
 
 enum class YOLOType {
     YOLOv3,

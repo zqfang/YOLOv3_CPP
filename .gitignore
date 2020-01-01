@@ -1,12 +1,14 @@
 
-
+cmake-build-debug
 # project dirs
 datasets
 models/*.weights
 lib/libtorch
-libtorch120debug
+libtorch
 build
 dist
+.DS_Store
+.idea
 
 # pytorch/python/numpy formats
 *.pth
@@ -16,7 +18,7 @@ dist
 
 # ipython/jupyter notebooks
 *.ipynb
-**/.ipynb_checkpoints/
+
 
 # Editor temporaries
 *.swn

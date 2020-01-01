@@ -4,8 +4,8 @@
 #include "Detector.h"
 #include "Darknet.h"
 #include "letterbox.h"
-#include <assert.h>
-namespace {
+//#include <assert.h>
+namespace DETECT {
 	// x, y, h, w
     void center_to_corner(torch::Tensor bbox) {
 		// top left x = centerX - w / 2 ...
@@ -45,7 +45,7 @@ namespace {
 
 	// traget: 1d tensor
 	// pred: 2d tensor
-	torch::Tensor iou(torch::Tensor & pred) {
+	torch::Tensor iou(torch::Tensor pred) {
 		torch::Tensor ious = torch::empty(pred.size(0));
 		auto pacc = pred.accessor<float, 2>();
 		cv::Rect2f bb_test(pacc[0][0], pacc[0][1], pacc[0][2], pacc[0][3]);
@@ -125,7 +125,7 @@ namespace {
 	//pred dim: [Tx, Ty, Tw, Th, conf, max_class_score, max_class_indice]
 	void weightedNMS(std::vector<Detection> & dets, torch::Tensor & pred, float threshold) {
 
-		// sort desending by class_score
+		// sort descending by class_score
 		auto index = pred.select(1, 5).argsort(-1, true);
 		pred = pred.index_select(0, index); // reorder 2d tensor
 
@@ -171,8 +171,8 @@ Detector::Detector(const std::array<int64_t, 2> &_inp_dim,
         break;
     case YOLOType::YOLOv3_TINY:
 		// TODO: change the path of tiny input
-        net = std::make_unique<Darknet>("D:\\Github\\YOLOv3_torch\\models\\yolov3-tiny.cfg");
-        net->load_weights("D:\\Github\\YOLOv3_torch\\models\\yolov3-tiny.weights");
+        net = std::make_unique<Darknet>("Github/YOLOv3_CPP/models/yolov3-tiny.cfg");
+        net->load_weights("Github/YOLOv3_CPP/models/yolov3-tiny.weights");
         break;
     default:
         break;
@@ -202,7 +202,7 @@ std::vector<Detection> Detector::predict(cv::Mat image) {
 	// resize to model input dim
     image = letterbox_img(image, inp_dim);  
 
-	// BGR2RGB: if models trained in RGB order. Be carefull
+	// BGR2RGB: if models trained in RGB order. Be careful
     cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
     image.convertTo(image, CV_32F);
 
@@ -221,7 +221,7 @@ std::vector<Detection> Detector::predict(cv::Mat image) {
 	//TODO: Batch inference
 	// for (auto &pred: prediction){}
 	prediction.squeeze_(0);
-    auto [bbox, scr, cls] = threshold_confidence(prediction, confidence_threshold);
+    auto [bbox, scr, cls] = DETECT::threshold_confidence(prediction, confidence_threshold);
     
 	// NO objects found!
 	if (bbox.numel()== 0) 
@@ -233,7 +233,7 @@ std::vector<Detection> Detector::predict(cv::Mat image) {
 	scr = scr.cpu();
 
 	// Covert to (left, top, weight, height)
-	center_to_corner(bbox);
+	DETECT::center_to_corner(bbox);
 	//Covert back to orig_dim scale
 	inv_letterbox_bbox(bbox, inp_dim, orig_dim);
 
@@ -255,7 +255,7 @@ std::vector<Detection> Detector::predict(cv::Mat image) {
 		dets.emplace_back(d);
 	}
 	//softNMS(dets, NMS_threshold, 2, 0.5, 0.001);
-	NMS(dets, NMS_threshold);
+	DETECT::NMS(dets, NMS_threshold);
 
     return dets;
 
