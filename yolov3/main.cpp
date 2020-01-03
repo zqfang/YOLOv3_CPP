@@ -22,7 +22,7 @@ int main(int argc, const char *argv[]) {
 	Detector detector(inp_dim, config, weights);
 
 	// using opencv's glob function to get file list in a folder
-	std::vector<std::string> filenames;
+	std::vector<cv::String> filenames;
 	std::string path = argv[3];
 	path = path+"/*.jpg";
 	cv::glob(path, filenames, false);
