@@ -9,9 +9,9 @@ Torch (C++) implementation of YOLOv3, which works on `Windows`,`Mac`, `Linux`.
 * libTorch >= 1.3, or nightly
 * OpenCV   >= 4.0
 * C++17
-* Win10: vs2017+cuda90, vs2019+cuda10
-* Linux
-* MacOS 
+* Win10: vs2019+cuda10, passed
+* Linux: g++ >=7.3.0  ==> `error`: libtorch.so: undefined reference to `lgammaf@GLIBC_2.23'
+* MacOS: passed 
 
 ## Usage
 
