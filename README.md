@@ -9,8 +9,11 @@ Torch (C++) implementation of YOLOv3, which works on `Windows`,`Mac`, `Linux`.
 * libTorch >= 1.3, or nightly
 * OpenCV   >= 4.0
 * C++17
-* Win10: vs2019+cuda10, passed
-* Linux: g++ >=7.3.0  ==> `error`: libtorch.so: undefined reference to `lgammaf@GLIBC_2.23'
+* Win10: vs2019, passed
+* Linux: 
+  - g++ >=7.3.0
+  - Pre-cxx11 ABI: passed
+  - cxx11 ABI => `error`: libtorch.so: undefined reference to `lgammaf@GLIBC_2.23'
 * MacOS: passed 
 
 ## Usage
@@ -38,13 +41,24 @@ cd path/to/YOLOv3
 mkdir build
 cd build
 cmake ..
-make # linux
+make # linux, mac
 # if windows, open YOLOV3-app.sln and then build 
 ```
 
 ## Performance
+test code:
+```
+yolov3 models/yolov3.cfg models/yolov3.weights images
+```
 
-Only tested with CPU on Windows for now. 
+Results:
+
+1. tested with CPU: `Core i9`
+    - Windows
+    - MAC: average time (682 ms/image).
+    
+2. tested with GPU: `Tesla V100`
+    - Linux: average time (22 ms/image).
 
 
 ## Features
